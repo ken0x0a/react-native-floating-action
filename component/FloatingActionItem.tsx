@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -10,7 +10,28 @@ import {
 
 import { getTouchableComponent } from './utils/touchable';
 
-class FloatingActionItem extends Component {
+export interface FloatingActionItemProps {
+  color?: string,
+  icon?: any,
+  name: string,
+  textContainerStyle?: object,
+  text?: string,
+  textStyle?: object,
+  textProps?: object,
+  textBackground?: string,
+  textColor?: string,
+  // not on doc
+  textElevation?: number,
+  // not modified by user
+  position?: 'left' | 'right' | 'center'
+  active?: boolean,
+  distanceToEdge?: number,
+  paddingTopBottom?: number, // modified by parent property "actionsPaddingTopBottom"
+  margin?: number
+  onPress?: () => void,
+};
+
+class FloatingActionItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -163,28 +184,6 @@ class FloatingActionItem extends Component {
     );
   }
 }
-
-FloatingActionItem.propTypes = {
-  color: PropTypes.string,
-  icon: PropTypes.any,
-  name: PropTypes.string.isRequired,
-  textContainerStyle: PropTypes.object,
-  text: PropTypes.string,
-  textStyle: PropTypes.object,
-  textProps: PropTypes.object,
-  textBackground: PropTypes.string,
-  textColor: PropTypes.string,
-  // not on doc
-  textElevation: PropTypes.number,
-  // not modified by user
-  position: PropTypes.oneOf(['left', 'right', 'center']),
-  active: PropTypes.bool,
-  distanceToEdge: PropTypes.number,
-  paddingTopBottom: PropTypes.number, // modified by parent property "actionsPaddingTopBottom"
-  onPress: PropTypes.func,
-  render: PropTypes.func,
-  margin: PropTypes.number
-};
 
 FloatingActionItem.defaultProps = {
   color: '#1253bc',

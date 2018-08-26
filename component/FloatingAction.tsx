@@ -1,5 +1,4 @@
-import React, { Component } from 'react'; // eslint-disable-line
-import PropTypes from 'prop-types';
+import React from 'react'
 import {
   StyleSheet,
   Image,
@@ -20,7 +19,64 @@ import { getTouchableComponent, getRippleProps } from './utils/touchable';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const ACTION_BUTTON_SIZE = 56;
 
-class FloatingAction extends Component {
+interface FloatingActionType {
+  color?: string,
+  icon?: any,
+  name: string,
+  text?: string,
+  textBackground?: string,
+  textColor?: string,
+  component?: () => React.ReactNode
+}
+
+interface FloatingActionProps {
+  actions: FloatingActionType[],
+  color: string,
+  distanceToEdge: number,
+  visible: boolean,
+  overlayColor: string,
+  position: 'right' | 'left' | 'center'
+  overrideWithAction: boolean, // replace mainAction with first action from actions
+  floatingIcon: any,
+  showBackground: boolean,
+  openOnMount: boolean,
+  actionsPaddingTopBottom: number,
+  iconHeight: number,
+  iconWidth: number,
+  listenKeyboard: boolean,
+  dismissKeyboardOnPress: boolean,
+  onPressItem: () => void,
+  onPressMain: () => void
+};
+interface FloatingActionState {
+  active: boolean,
+  keyboardHeight: number
+}
+
+class FloatingAction extends React.Component<FloatingActionProps, FloatingActionState> {
+  static defaultProps = {
+    dismissKeyboardOnPress: false,
+    listenKeyboard: false,
+    actionsPaddingTopBottom: 8,
+    overrideWithAction: false,
+    visible: true,
+    color: '#1253bc',
+    overlayColor: 'rgba(68, 68, 68, 0.6)',
+    position: 'right',
+    distanceToEdge: 30,
+    openOnMount: false,
+    showBackground: true,
+    iconHeight: 15,
+    iconWidth: 15
+  }
+
+  mainBottomAnimation: Animated.Value
+  actionsBottomAnimation: Animated.Value
+  animation: Animated.Value
+  actionsAnimation: Animated.Value
+  visibleAnimation: Animated.Value
+  fadeAnimation: Animated.Value
+
   constructor(props) {
     super(props);
 
@@ -405,50 +461,6 @@ class FloatingAction extends Component {
     );
   }
 }
-
-FloatingAction.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.shape({
-    color: PropTypes.string,
-    icon: PropTypes.any,
-    name: PropTypes.string.isRequired,
-    text: PropTypes.string,
-    textBackground: PropTypes.string,
-    textColor: PropTypes.string,
-    component: PropTypes.func
-  })),
-  color: PropTypes.string,
-  distanceToEdge: PropTypes.number,
-  visible: PropTypes.bool,
-  overlayColor: PropTypes.string,
-  position: PropTypes.oneOf(['right', 'left', 'center']),
-  overrideWithAction: PropTypes.bool, // replace mainAction with first action from actions
-  floatingIcon: PropTypes.any,
-  showBackground: PropTypes.bool,
-  openOnMount: PropTypes.bool,
-  actionsPaddingTopBottom: PropTypes.number,
-  iconHeight: PropTypes.number,
-  iconWidth: PropTypes.number,
-  listenKeyboard: PropTypes.bool,
-  dismissKeyboardOnPress: PropTypes.bool,
-  onPressItem: PropTypes.func,
-  onPressMain: PropTypes.func
-};
-
-FloatingAction.defaultProps = {
-  dismissKeyboardOnPress: false,
-  listenKeyboard: false,
-  actionsPaddingTopBottom: 8,
-  overrideWithAction: false,
-  visible: true,
-  color: '#1253bc',
-  overlayColor: 'rgba(68, 68, 68, 0.6)',
-  position: 'right',
-  distanceToEdge: 30,
-  openOnMount: false,
-  showBackground: true,
-  iconHeight: 15,
-  iconWidth: 15
-};
 
 const styles = StyleSheet.create({
   actions: {
