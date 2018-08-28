@@ -27,6 +27,7 @@ interface FloatingActionType {
   textBackground?: string,
   textColor?: string,
   component?: () => React.ReactNode
+  render?: () => React.ReactNode
 }
 
 interface FloatingActionProps {

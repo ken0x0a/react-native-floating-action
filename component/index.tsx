@@ -1,1 +1,3 @@
-export { default as FloatingAction } from './FloatingAction';
+import  FloatingAction from './FloatingAction';
+
+export {  FloatingAction } 

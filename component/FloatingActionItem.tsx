@@ -29,6 +29,7 @@ export interface FloatingActionItemProps {
   paddingTopBottom?: number, // modified by parent property "actionsPaddingTopBottom"
   margin?: number
   onPress?: () => void,
+  render?: () => React.ReactNode
 };
 
 class FloatingActionItem extends React.Component {
